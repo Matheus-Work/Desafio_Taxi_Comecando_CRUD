@@ -25,14 +25,22 @@ namespace taxi
             string nomeDigitado = "";
 
             contarMotorista(ref numero_motoristas);
+            Console.WriteLine("\n---------------\n");
             taxi[] taxi = new taxi[numero_motoristas];
-            lerVetor(ref numero_motoristas, taxi);
-            imprimirVetor ( valor_receber, ref numero_motoristas, taxi);
+            createVetor(ref numero_motoristas, taxi);
+            Console.WriteLine("\n---------------\n");
+            readVetor(valor_receber, ref numero_motoristas, taxi);
+            Console.WriteLine("\n---------------\n");
             verificaMaior(taxi, ref numero_motoristas);
-            alterar(taxi, nomeDigitado, ref numero_motoristas);
-            imprimirVetor( valor_receber, ref numero_motoristas, taxi);
-            excluir(taxi, nomeDigitado, ref numero_motoristas);
-            imprimirVetor( valor_receber, ref numero_motoristas, taxi);
+            Console.WriteLine("\n---------------\n");
+            update(taxi, nomeDigitado, ref numero_motoristas);
+            Console.WriteLine("\n---------------\n");
+            readVetor(valor_receber, ref numero_motoristas, taxi);
+            Console.WriteLine("\n---------------\n");
+            delete(taxi, nomeDigitado, ref numero_motoristas);
+            Console.WriteLine("\n---------------\n");
+            readVetor(valor_receber, ref numero_motoristas, taxi);
+            Console.WriteLine("\n---------------\n");
             consultar(taxi, nomeDigitado, ref numero_motoristas, valor_receber);
         }
         public static void contarMotorista(ref int numero_motoristas)
@@ -40,7 +48,7 @@ namespace taxi
             Console.WriteLine("Quantos motoristas tem?");
             numero_motoristas = int.Parse(Console.ReadLine());
         }
-        public static void lerVetor(ref int numero_motoristas, taxi[] taxi)
+        public static void createVetor(ref int numero_motoristas, taxi[] taxi)
         {
             for (int i = 0; i < numero_motoristas; i++)
             {
@@ -55,13 +63,17 @@ namespace taxi
                 Console.WriteLine("-------------");
             }
         }
-        public static void imprimirVetor( double valor_receber, ref int numero_motoristas, taxi[] taxi)
+        public static void readVetor(double valor_receber, ref int numero_motoristas, taxi[] taxi)
         {
             Console.WriteLine("Nome    |    Número do Táxi    |    Valor à receber     |    Ativo ");
+
             for (int i = 0; i < numero_motoristas; i++)
             {
-                valor_receber = taxi[i].kper * 1.2;
-                Console.WriteLine("{0}         {1}                            {2:F2}           {3}", taxi[i].nome, taxi[i].numero_taxi, valor_receber,taxi[i].ativo);
+                if (taxi[i].ativo == 1)
+                {
+                    valor_receber = taxi[i].kper * 1.2;
+                    Console.WriteLine("{0}         {1}                            {2:F2}           {3}", taxi[i].nome, taxi[i].numero_taxi, valor_receber, taxi[i].ativo);
+                }
             }
         }
         public static void verificaMaior(taxi[] taxi, ref int numero_motoristas)
@@ -81,7 +93,7 @@ namespace taxi
             Console.WriteLine("O motorista com maior valor a receber foi o {0} com o preço da viagem de {1:F2}, e o número do taxi é igual a {2}", taxi[p].nome, precoMaior, taxi[p].numero_taxi);
 
         }
-        public static void alterar(taxi[] taxi, string nomeDigitado, ref int numero_motoristas)
+        public static void update(taxi[] taxi, string nomeDigitado, ref int numero_motoristas)
         {
             Console.WriteLine("Alterar um taxista: ");
             Console.WriteLine("Informe seu nome: ");
@@ -90,7 +102,7 @@ namespace taxi
             {
                 if (nomeDigitado == taxi[i].nome)
                 {
-                    Console.WriteLine("Nome do {0}º motorista", i + 1);
+                    Console.WriteLine("Nome do motorista {0}: ", taxi[i].nome);
                     taxi[i].nome = Console.ReadLine();
                     Console.WriteLine("Número do taxi");
                     taxi[i].numero_taxi = int.Parse(Console.ReadLine());
@@ -100,16 +112,16 @@ namespace taxi
                 }
             }
         }
-        public static void excluir(taxi[] taxi, string nomeDigitado, ref int numero_motoristas)
+        public static void delete(taxi[] taxi, string nomeDigitado, ref int numero_motoristas)
         {
             Console.WriteLine("Excluir um taxista: ");
             Console.WriteLine("Informe seu nome: ");
             nomeDigitado = Console.ReadLine();
-            for(int i=0;i< numero_motoristas; i++)
+            for (int i = 0; i < numero_motoristas; i++)
             {
-                if(nomeDigitado == taxi[i].nome)
+                if (nomeDigitado == taxi[i].nome)
                 {
-                    taxi[i].ativo =0;
+                    taxi[i].ativo = 0;
                 }
             }
         }
@@ -124,7 +136,7 @@ namespace taxi
                 {
                     valor_receber = taxi[i].kper * 1.2;
                     Console.WriteLine("Nome    |    Número do Táxi    |    Valor à receber     |    Ativo ");
-                    Console.WriteLine("{0}         {1}                            {2:F2}           {3}", 
+                    Console.WriteLine("{0}         {1}                            {2:F2}           {3}",
                         taxi[i].nome, taxi[i].numero_taxi, valor_receber, taxi[i].ativo);
                 }
             }
